@@ -15,6 +15,7 @@ public class Usuario {
     private String login;
     private byte[] senha;
     private Collection<Log> logs;
+    private Collection<Post> posts;
 
     @OneToMany(mappedBy = "usuario")
     public Collection<Log> getLogs() {
@@ -23,6 +24,15 @@ public class Usuario {
 
     public void setLogs(Collection<Log> logs) {
         this.logs = logs;
+    }
+
+    @OneToMany(mappedBy = "usuario")
+    public Collection<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Collection<Post> posts) {
+        this.posts = posts;
     }
 
     @Id

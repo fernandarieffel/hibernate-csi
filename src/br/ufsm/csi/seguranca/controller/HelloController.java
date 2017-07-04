@@ -14,4 +14,8 @@ public class HelloController {
         return "hello";
     }
 
+    @RequestMapping("entrar.html")
+    public String entrar() {
+        return "entrar";
+    }
 }

@@ -27,6 +27,10 @@ public class HibernateDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    public Object carregaObjeto(Class classe, Serializable id) {
+        return sessionFactory.getCurrentSession().get(classe, id);
+    }
+
     public void criaObjeto(Object o) {
         sessionFactory.getCurrentSession().save(o);
     }
@@ -69,10 +73,6 @@ public class HibernateDAO {
         }
 
         return detachedCriteria.getExecutableCriteria(sessionFactory.getCurrentSession()).list();
-    }
-
-    public Object carregaObjeto(Class classe, Serializable id) {
-        return sessionFactory.getCurrentSession().get(classe, id);
     }
 
     public Usuario findUsuario(String login, String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException {

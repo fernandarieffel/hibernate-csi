@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,7 +43,7 @@ public class UsuarioController {
 
     @Transactional
     @RequestMapping("login.html")
-    public String login(String login, String senha) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public String login(HttpSession sessao, String login, String senha) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 //        Map<String, Object> map = new HashMap<>();
 //        map.put("login", login);
 //        MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -53,11 +54,15 @@ public class UsuarioController {
 //        } else {
 //            return "ok";
 //        }
-        Usuario usuario = hibernateDAO.findUsuarioHQL(login, senha);
+        Usuario usuario = hibernateDAO.findUsuario(login, senha);
         if (usuario == null) {
             return "acesso-negado";
         } else {
-            return "ok";
+            System.out.println(usuario.getLogin());
+            System.out.println(usuario.getNome());
+            System.out.println(usuario.getId());
+            sessao.setAttribute("usuario", usuario);
+            return "redirect:novo-post.priv";
         }
     }
 
